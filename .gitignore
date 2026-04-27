@@ -1,0 +1,12 @@
+# .gitignore
+.lingma/
+.venv/
+build/
+dist/
+*.pyd
+*.dll
+*.exp
+*.lib
+enc2db/resource/
+__pycache__/
+*.pyc

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit-build-core.build"
+
+[project]
+name = "enc2db"
+version = "0.1.0"
+description = "S-57 (.000) file parsing and Spatialite DB translation tool"
+requires-python = ">=3.8"
+dependencies = [] # Python 侧依赖
+
+[tool.scikit-build]
+wheel.py-api = "cp38"
+cmake.args = [
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCMAKE_TOOLCHAIN_FILE=D:/UyNauhL/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "-Dpybind11_DIR=D:/UyNauhL/ENC/enc2db/.venv/lib/site-packages/pybind11/share/cmake/pybind11"
+]
+wheel.packages = ["enc2db"]
+wheel.expand-macos-universal-tags = true
