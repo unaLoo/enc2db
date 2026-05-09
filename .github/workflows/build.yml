@@ -21,10 +21,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install vcpkg headers only
+      - name: Cache vcpkg
+        id: cache-vcpkg
+        uses: actions/cache@v4
+        with:
+          path: C:/vcpkg/installed
+          key: vcpkg-x64-windows-gdal-spatialite-v1
+
+      - name: Install vcpkg dependencies
+        if: steps.cache-vcpkg.outputs.cache-hit != 'true'
         run: |
-          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows --only-downloads
-          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows --head
+          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows
 
       - name: Install Python build dependencies
         run: |

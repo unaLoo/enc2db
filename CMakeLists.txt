@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 project(enc2db LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-set(PYBIND11_NEWPYTHON ON)
 
 install(DIRECTORY resource/ DESTINATION enc2db/resource)
 
@@ -55,8 +54,7 @@ set(SOURCE_FILES
     src/S57Parser/util.cpp
 )
 
-# pybind11_add_module(_enc2db_core ${SOURCE_FILES})
-pybind11_add_module(_enc2db_core STABLE_ABI ${SOURCE_FILES})
+pybind11_add_module(_enc2db_core ${SOURCE_FILES})
 
 target_link_libraries(_enc2db_core PRIVATE
     ${GDAL_LIBRARIES}
@@ -64,6 +62,5 @@ target_link_libraries(_enc2db_core PRIVATE
     ${SPATIALITE_LIBRARY}
     ${GEOS_LIBRARIES}
 )
-
 
 install(TARGETS _enc2db_core DESTINATION enc2db)
