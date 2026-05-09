@@ -24,6 +24,7 @@ jobs:
       - name: Download prebuilt vcpkg deps
         run: |
           curl -L -o vcpkg-deps.tar.gz https://github.com/unaLoo/enc2db/releases/download/prebuilt-deps-v1/vcpkg-x64-windows.tar.gz
+          New-Item -ItemType Directory -Force -Path C:/vcpkg/installed
           tar -xzf vcpkg-deps.tar.gz -C C:/vcpkg/installed/
 
       - name: Install Python build dependencies
