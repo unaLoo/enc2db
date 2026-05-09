@@ -4,9 +4,13 @@
 build/
 dist/
 *.pyd
-*.dll
 *.exp
 *.lib
 enc2db/resource/
 __pycache__/
 *.pyc
+
+*.dll
+# 但 prebuilt 目录除外
+!prebuilt/
+!prebuilt/**/*.dll
