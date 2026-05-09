@@ -64,3 +64,7 @@ target_link_libraries(_enc2db_core PRIVATE
 )
 
 install(TARGETS _enc2db_core DESTINATION enc2db)
+if(WIN32)
+    file(GLOB PREBUILT_DLLS "${CMAKE_SOURCE_DIR}/prebuilt/windows-x64/*.dll")
+    install(FILES ${PREBUILT_DLLS} DESTINATION enc2db)
+endif()
