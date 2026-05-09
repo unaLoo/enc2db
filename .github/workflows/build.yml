@@ -21,17 +21,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Cache vcpkg
-        id: cache-vcpkg
-        uses: actions/cache@v4
-        with:
-          path: C:/vcpkg/installed
-          key: vcpkg-x64-windows-gdal-spatialite-v1
-
-      - name: Install vcpkg dependencies
-        if: steps.cache-vcpkg.outputs.cache-hit != 'true'
+      - name: Download prebuilt vcpkg deps
         run: |
-          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows
+          curl -L -o vcpkg-deps.tar.gz https://github.com/unaLoo/enc2db/releases/download/prebuilt-deps-v1/vcpkg-x64-windows.tar.gz
+          tar -xzf vcpkg-deps.tar.gz -C C:/vcpkg/installed/
 
       - name: Install Python build dependencies
         run: |
