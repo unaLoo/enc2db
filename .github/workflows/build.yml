@@ -1,4 +1,4 @@
-name: Build Wheels
+name: Build Wheels [Windows]
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9"]
 
     steps:
       - uses: actions/checkout@v4
@@ -21,11 +21,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install vcpkg dependencies
+      - name: Install vcpkg headers only
         run: |
-          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows
-        env:
-          VCPKG_DEFAULT_TRIPLET: x64-windows
+          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows --only-downloads
+          vcpkg install gdal:x64-windows sqlite3:x64-windows geos:x64-windows libspatialite:x64-windows --head
 
       - name: Install Python build dependencies
         run: |
@@ -38,7 +37,7 @@ jobs:
           $dir = python -c "import pybind11; print(pybind11.get_cmake_dir())"
           echo "cmake_dir=$dir" >> $env:GITHUB_OUTPUT
 
-      - name: Build wheel
+      - name: Build pyd
         run: |
           mkdir build
           cd build
@@ -47,11 +46,18 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release `
             -Dpybind11_DIR="${{ steps.pybind11.outputs.cmake_dir }}"
           cmake --build . --config Release
-          cd ..
+
+      - name: Copy prebuilt DLLs into package
+        run: |
+          copy prebuilt\windows-x64\*.dll enc2db\
+          copy build\Release\*.pyd enc2db\
+
+      - name: Package wheel
+        run: |
           python -c "import scikit_build_core.build; scikit_build_core.build.build_wheel('dist')"
 
-      - name: Upload wheel
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wheel-cp${{ matrix.python-version }}
+          name: wheel-windows-cp${{ matrix.python-version }}
           path: dist/*.whl
