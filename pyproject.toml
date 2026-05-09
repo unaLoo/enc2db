@@ -5,9 +5,19 @@ build-backend = "scikit-build-core.build"
 [project]
 name = "enc2db"
 version = "0.1.3"
-description = "S-57 (.000) file parsing and Spatialite DB translation tool"
+description = "Parse and convert IHO S-57 (.000) ENC files to SpatiaLite DB"
 requires-python = ">=3.8"
 dependencies = [] # Python 侧依赖
+
+readme = "pipREADME.md"
+
+authors = [
+    {name = "unaLoo", email = "loonujabes@gmail.com"}
+]
+
+[project.urls]
+Homepage = "https://github.com/unaLoo/enc2db"
+Repository = "https://github.com/unaLoo/enc2db"
 
 [tool.scikit-build]
 cmake.args = ["-DCMAKE_BUILD_TYPE=Release"]
