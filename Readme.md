@@ -97,3 +97,9 @@ python -c "import scikit_build_core.build; scikit_build_core.build.build_wheel('
 
 基于 GitHub Actions 实现跨平台编译
 
+### 6.3 pypi 发布
+
+- 注册 pypi
+- 创建 token
+- 仓库 secrets 配置
+- workflow 触发

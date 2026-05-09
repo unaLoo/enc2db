@@ -48,11 +48,6 @@ jobs:
             -Dpybind11_DIR="${{ steps.pybind11.outputs.cmake_dir }}"
           cmake --build . --config Release
 
-      - name: Copy prebuilt DLLs into package
-        run: |
-          copy prebuilt\windows-x64\*.dll enc2db\
-          copy build\Release\*.pyd enc2db\
-
       - name: Package wheel
         run: |
           $pybind11_dir = python -c "import pybind11; print(pybind11.get_cmake_dir())"
