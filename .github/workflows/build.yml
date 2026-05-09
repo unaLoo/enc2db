@@ -55,8 +55,10 @@ jobs:
 
       - name: Package wheel
         run: |
+          $pybind11_dir = python -c "import pybind11; print(pybind11.get_cmake_dir())"
+          $env:SKBUILD_CMAKE_ARGS = "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake;-Dpybind11_DIR=$pybind11_dir"
           python -c "import scikit_build_core.build; scikit_build_core.build.build_wheel('dist')"
-
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:

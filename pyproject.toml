@@ -10,11 +10,6 @@ requires-python = ">=3.8"
 dependencies = [] # Python 侧依赖
 
 [tool.scikit-build]
-wheel.py-api = "cp38"
-cmake.args = [
-    "-DCMAKE_BUILD_TYPE=Release",
-    "-DCMAKE_TOOLCHAIN_FILE=D:/UyNauhL/vcpkg/scripts/buildsystems/vcpkg.cmake",
-    "-Dpybind11_DIR=D:/UyNauhL/ENC/enc2db/.venv/lib/site-packages/pybind11/share/cmake/pybind11"
-]
+cmake.args = ["-DCMAKE_BUILD_TYPE=Release"]
 wheel.packages = ["enc2db"]
 wheel.expand-macos-universal-tags = true
